@@ -22,10 +22,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci
+          cache: 'npm'
+      # ⬇️ Usa npm install en lugar de npm ci (no hay package-lock.json)
+      - run: npm install --no-audit --no-fund
+      # CRA respeta "homepage" para subcarpetas (e.g. /plandepagos/)
       - run: npm run build
         env:
-          # CRA respeta "homepage" para rutas bajo /plandepagos/
           CI: false
       - uses: actions/upload-pages-artifact@v3
         with:
